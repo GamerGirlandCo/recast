@@ -13,7 +13,7 @@ export function getLineTerminator() {
 export function isBrowser() {
   return (
     typeof window !== "undefined" && typeof window.document !== "undefined"
-  );
+  ) || globalThis instanceof DedicatedWorkerGlobalScope;
 }
 
 export function getOption(options: any, key: any, defaultValue: any) {
