@@ -1,4 +1,3 @@
-import fs from "fs";
 import * as types from "ast-types";
 import { parse } from "./lib/parser";
 import { Printer } from "./lib/printer";
@@ -67,14 +66,16 @@ export interface RunOptions extends Options {
 }
 
 function runFile(path: any, transformer: Transformer, options?: RunOptions) {
-  fs.readFile(path, "utf-8", function (err, code) {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  import("fs").then((fs) => {
+    fs.readFile(path, "utf-8", function (err, code) {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    runString(code, transformer, options);
-  });
+      runString(code, transformer, options);
+    });
+  })
 }
 
 function defaultWriteback(output: string) {
